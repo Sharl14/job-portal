@@ -1,5 +1,5 @@
 {
-  "id": "00b12857-4d23-426a-8596-93491105a881",
+  "id": "8bf63ffd-47a6-4f33-a7a9-ad5abb287a58",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -322,26 +322,32 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.user_notification_settings": {
-      "name": "user_notification_settings",
+    "public.organization_user_settings": {
+      "name": "organization_user_settings",
       "schema": "",
       "columns": {
         "userId": {
           "name": "userId",
           "type": "varchar",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
-        "newJobEmailNotifications": {
-          "name": "newJobEmailNotifications",
+        "organizationId": {
+          "name": "organizationId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "newApplicationEmailNotifications": {
+          "name": "newApplicationEmailNotifications",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
           "default": false
         },
-        "aiPrompt": {
-          "name": "aiPrompt",
-          "type": "varchar",
+        "minimumRating": {
+          "name": "minimumRating",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
@@ -362,9 +368,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "user_notification_settings_userId_users_id_fk": {
-          "name": "user_notification_settings_userId_users_id_fk",
-          "tableFrom": "user_notification_settings",
+        "organization_user_settings_userId_users_id_fk": {
+          "name": "organization_user_settings_userId_users_id_fk",
+          "tableFrom": "organization_user_settings",
           "tableTo": "users",
           "columnsFrom": [
             "userId"
@@ -374,9 +380,30 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
+        },
+        "organization_user_settings_organizationId_organizations_id_fk": {
+          "name": "organization_user_settings_organizationId_organizations_id_fk",
+          "tableFrom": "organization_user_settings",
+          "tableTo": "organizations",
+          "columnsFrom": [
+            "organizationId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "organization_user_settings_userId_organizationId_pk": {
+          "name": "organization_user_settings_userId_organizationId_pk",
+          "columns": [
+            "userId",
+            "organizationId"
+          ]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -468,93 +495,6 @@
           "columns": [
             "jobListingId",
             "userId"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.organization_user_settings": {
-      "name": "organization_user_settings",
-      "schema": "",
-      "columns": {
-        "userId": {
-          "name": "userId",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "organizationId": {
-          "name": "organizationId",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "newApplicationEmailNotifications": {
-          "name": "newApplicationEmailNotifications",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "minimumRating": {
-          "name": "minimumRating",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updatedAt": {
-          "name": "updatedAt",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "organization_user_settings_userId_users_id_fk": {
-          "name": "organization_user_settings_userId_users_id_fk",
-          "tableFrom": "organization_user_settings",
-          "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "organization_user_settings_organizationId_organizations_id_fk": {
-          "name": "organization_user_settings_organizationId_organizations_id_fk",
-          "tableFrom": "organization_user_settings",
-          "tableTo": "organizations",
-          "columnsFrom": [
-            "organizationId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "organization_user_settings_userId_organizationId_pk": {
-          "name": "organization_user_settings_userId_organizationId_pk",
-          "columns": [
-            "userId",
-            "organizationId"
           ]
         }
       },
