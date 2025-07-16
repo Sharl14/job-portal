@@ -23,15 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
-          suppressHydrationWarning
-        >
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+        suppressHydrationWarning
+      >
+        <ClerkProvider>{children}</ClerkProvider>
+      </body>
+    </html>
   );
 }

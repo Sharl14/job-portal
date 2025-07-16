@@ -1,22 +1,12 @@
+"use client";
 import { OrganizationList } from "@clerk/nextjs";
-import { Suspense } from "react";
 
 type Props = {
-  searchParams: Promise<{ redirect?: string }>;
+  searchParams: { redirect?: string };
 };
 
-export default async function OrganizationSelectPage(props: Props) {
-  return (
-    <Suspense>
-      <SuspendedPage {...props} />
-    </Suspense>
-  );
-}
-
-async function SuspendedPage({ searchParams }: Props) {
-  const { redirect } = await searchParams;
-  const redirectUrl = redirect ?? "/employer";
-
+export default function OrganizationSelectPage({ searchParams }: Props) {
+  const redirectUrl = searchParams?.redirect ?? "/employer";
   return (
     <OrganizationList
       hidePersonal

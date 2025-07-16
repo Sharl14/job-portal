@@ -9,7 +9,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { SignedIn } from "@/services/clerk/components/SignInStatus";
-import { AppSidebarClient } from "./_AppSidebarClient";
+import AppSidebarClient from "./_AppSidebarClient";
 import { ReactNode } from "react";
 
 export function AppSidebar({
