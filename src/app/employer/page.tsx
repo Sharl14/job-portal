@@ -5,17 +5,8 @@ import { getJobListingOrganizationTag } from "@/features/jobListings/db/cache/jo
 import { desc, eq } from "drizzle-orm";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 
-export default function EmployerHomePage() {
-  return (
-    <Suspense>
-      <SuspendedPage />
-    </Suspense>
-  );
-}
-
-async function SuspendedPage() {
+export default async function EmployerHomePage() {
   const { orgId } = await getCurrentOrganization();
   if (orgId == null) return null;
 

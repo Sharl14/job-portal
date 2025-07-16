@@ -1,7 +1,13 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
+import {// next.config.js
+module.exports = {
+  experimental: {
+    useCache: true,
+  },
+  // ...other config
+};
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
