@@ -1,10 +1,8 @@
 import { db } from "@/drizzle/db";
-import { UserTable, OrganizationTable } from "@/drizzle/schema";
-import { getUserIdTag } from "@/features/users/db/cache/users";
+import { schema } from "@/drizzle/schema";
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
-import { getOrganizationIdTag } from "@/features/organizations/db/cache/organizations";
+
 export async function getCurrentUser({ allData = false } = {}) {
   const { userId } = await auth();
 
@@ -15,10 +13,8 @@ export async function getCurrentUser({ allData = false } = {}) {
 }
 
 async function getUser(id: string) {
-  "use cache";
-  cacheTag(getUserIdTag(id));
   return await db.query.UserTable.findFirst({
-    where: eq(UserTable.id, id),
+    where: eq(schema.UserTable.id, id),
   });
 }
 
@@ -33,10 +29,7 @@ export async function getCurrentOrganization({ allData = false } = {}) {
 }
 
 async function getOrganization(id: string) {
-  "use cache";
-  cacheTag(getOrganizationIdTag(id));
-
   return db.query.OrganizationTable.findFirst({
-    where: eq(OrganizationTable.id, id),
+    where: eq(schema.OrganizationTable.id, id),
   });
 }
